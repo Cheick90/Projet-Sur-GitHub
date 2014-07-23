@@ -16,9 +16,13 @@ import android.widget.ListView;
 			private String[] mStrings = {
 		            "Maliweb", "RFI", "Maliactu", "TV5 Monde", "France 24",
 		         };
+<<<<<<< HEAD
 			private String[] mUrls = {"http://www.maliweb.net", "http://www.rfi.fr", "http://www.maliactu.com",
 					"http://www.france24.fr", "http://www.tv5monde.org"};
 		         
+=======
+			
+>>>>>>> parent of c6bb3a6... Revert "ListView"
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
 				        setContentView(R.layout.main);
@@ -30,6 +34,7 @@ import android.widget.ListView;
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+<<<<<<< HEAD
 					
 					position=1;
 				    String url_maliweb = mUrls[1]; 
@@ -57,6 +62,11 @@ import android.widget.ListView;
 			        startActivity(webIntent3);
 			        
 			       
+=======
+					String url = "http://www.maliweb.com"; 
+					Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse( url )); 
+			        startActivity(webIntent);
+>>>>>>> parent of c6bb3a6... Revert "ListView"
 				}
 
 				
