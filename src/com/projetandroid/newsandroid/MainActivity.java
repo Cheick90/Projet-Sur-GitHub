@@ -1,7 +1,6 @@
 package com.projetandroid.newsandroid;
 
 import android.app.Activity;
-import android.content.ClipData.Item;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +16,8 @@ import android.widget.ListView;
 			private String[] mStrings = {
 		            "Maliweb", "RFI", "Maliactu", "TV5 Monde", "France 24",
 		         };
-			
+			private String[] mUrls = {"http://www.maliweb.net", "http://www.rfi.fr", "http://www.maliactu.com",
+					"http://www.france24.fr", "http://www.tv5monde.org"};
 		         
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
@@ -30,9 +30,10 @@ import android.widget.ListView;
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					    
-				        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                        startActivity(intent);
+					
+					    String url = mUrls[position];
+						Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+						startActivity(webIntent);
 			       
 				}
 
