@@ -13,26 +13,33 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 		public class MainActivity extends Activity{
+			
+			protected static final String SITE_CHOISI = "com.projetandroid.newsandroid";
 			ListView list ;
 			private String[] mStrings = {
 		            "Maliweb", "RFI", "Maliactu", "TV5 Monde", "France 24",
 		         };
 			
-		         
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
 				        setContentView(R.layout.main);
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
-			final ListView list = (ListView)findViewById(R.id.list);
+			ListView list = (ListView)findViewById(R.id.list);
 			list.setAdapter(adapter);
 			
 			list.setOnItemClickListener(new OnItemClickListener() {
+				
+
+				private String[] mUrls;
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					    
-				        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                        startActivity(intent);
+					    Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+					    intent.putExtra("SITE_CHOISI", mUrls[position]);
+			            startActivity(intent);
+			            
 			       
 				}
 
