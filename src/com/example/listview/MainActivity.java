@@ -1,4 +1,5 @@
-package com.projetandroid.newsandroid;
+package com.example.listview;
+
 
 import android.app.Activity;
 import android.content.ClipData.Item;
@@ -22,8 +23,9 @@ import android.widget.ListView;
 			
 			public void onCreate(Bundle savedInstanceState) {
 				super.onCreate(savedInstanceState);
-				        setContentView(R.layout.main);
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
+				        setContentView(R.layout.activity_main);
+			
+		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
 			ListView list = (ListView)findViewById(R.id.list);
 			list.setAdapter(adapter);
 			
@@ -37,20 +39,25 @@ import android.widget.ListView;
 
 				Intent intent = getIntent();
 		        	switch (position) {
-		        	  case 0:
-		        	    intent = new Intent(MainActivity.this, SecondActivity.class);
+		        	  case 0 :
+		        	    intent = new Intent(MainActivity.this, Maliweb.class);
+		        	    startActivity(intent);
 		        	break;
 		        	  case 1 :
-		        	   intent = new Intent(MainActivity.this, SecondActivity.class);
+		        	   intent = new Intent(MainActivity.this, rfi.class);
+		        	   startActivity(intent);
 		        	break;
 		        	  case 2 :
-		                  intent = new Intent(MainActivity.this, SecondActivity.class);
+		                  intent = new Intent(MainActivity.this, Maliactu.class);
+		                  startActivity(intent);
 		        	break;
 		        	  case 3 :
-		                  intent = new Intent(MainActivity.this, SecondActivity.class);
+		                  intent = new Intent(MainActivity.this, TV5Monde.class);
+		                  startActivity(intent);
 		            break;
 		             case 4 :
-		                  intent = new Intent(MainActivity.this, SecondActivity.class);
+		                  intent = new Intent(MainActivity.this, France24.class);
+		                  startActivity(intent);
 		        	 
 		        	}
 		        	if(intent != null)

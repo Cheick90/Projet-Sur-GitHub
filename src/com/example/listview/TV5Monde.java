@@ -1,4 +1,6 @@
-package com.projetandroid.newsandroid;
+package com.example.listview;
+
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,14 +16,12 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class SecondActivity extends Activity{
+public class TV5Monde extends Activity{
 	WebView webview;
 	
-	String[] mUrls = new String[] {"http://www.maliweb.net/economie/banque-mond-fmi/washington-fmi-mali-meme-longueur-donde-454922.html", 
-            "http://www.rfi.fr/moyen-orient/20140810-gaza-israel-palestine-guerre-morts-manifestations-tel-aviv-paris-boycott/", 
-            "http://www.tv5.org/cms/chaine-francophone/info/p-1911-Irak-Nouvelles-frappes-americaines-sur-les-jihadistes-Fabius-appelle-a-l-unite.htm?&rub=2&xml=newsmlmmd.urn.newsml.afp.com.20140810.0fa85d3f.34d5.414a.a756.5cb77498298b.xml",
-            "http://maliactu.net/corruption-ibk-ordonne-la-revision-de-tous-les-contrats-signes-par-soumeylou-boubeye-maiga/",
-            "http://www.france24.com/fr/urgent/20140810-irak-leiil-a-assassine-moins-500-yazidis-a-inhumes-fosses-communes-ministere-irakien-droits-lhomme/"};
+	String[] mUrls = new String[] {
+            "http://www.tv5.org/cms/chaine-francophone/info/",
+            };
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,3 +50,4 @@ public class SecondActivity extends Activity{
 	
 
 	
+
