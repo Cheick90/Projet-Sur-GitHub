@@ -1,6 +1,4 @@
-package com.projetandroid.newsandroid;
-
-
+package com.example.newsandroid;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 public class SecondActivity extends Activity{
 	WebView webview;
+	
 	String[] mUrls = new String[] {"http://www.maliweb.net/economie/banque-mond-fmi/washington-fmi-mali-meme-longueur-donde-454922.html", 
             "http://www.rfi.fr/moyen-orient/20140810-gaza-israel-palestine-guerre-morts-manifestations-tel-aviv-paris-boycott/", 
             "http://www.tv5.org/cms/chaine-francophone/info/p-1911-Irak-Nouvelles-frappes-americaines-sur-les-jihadistes-Fabius-appelle-a-l-unite.htm?&rub=2&xml=newsmlmmd.urn.newsml.afp.com.20140810.0fa85d3f.34d5.414a.a756.5cb77498298b.xml",
@@ -27,25 +26,32 @@ public class SecondActivity extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.mywebview);
+		setContentView(R.layout.fragment_main);
 		
 		Intent intent = getIntent();
-		String site_choisi  = intent.getStringExtra(MainActivity.SITE_CHOISI);
+		String mStrings = intent.getStringExtra(MainActivity.SITE_CHOISI);
 		
-        switch (site_choisi) {
-        	case "Maliweb":
-                 break;
-        	case "RFI":
-        		break;
-        	case  "Maliactu":
-        		break;
-        	case  "TV5 Monde":
-        		break;
-        	case "France 24":
-        		break;
-        }
-  	 
-  	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mUrls);
+			
+			
+			switch (mStrings) {
+	    	case "Maliweb": 
+	    		   mUrls = "www.maliweb.net";
+	             break;
+	    	case "Maliactu":
+	    		   mUrls = "www.maliactu.net";
+	        	 break;  
+	    	case  "RFI":
+	    		   mUrls = "www.rfi.org";
+	        	 break;
+	    	case "TV5 Monde": 
+	    		   mUrls = "www.tv5monde.org";
+	    		break;
+	    	case "France24": 
+	    		   mUrls = "www.france24.net";
+	        	break;
+		}
+
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mUrls);
 	final ListView list = (ListView)findViewById(R.id.list);
 	list.setAdapter(adapter);
 
@@ -62,7 +68,5 @@ public class SecondActivity extends Activity{
 	}
 
 	
-}
-	
+	}
 
-	

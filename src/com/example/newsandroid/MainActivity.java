@@ -1,4 +1,6 @@
-package com.projetandroid.newsandroid;
+package com.example.newsandroid;
+
+
 
 import android.app.Activity;
 import android.content.ClipData.Item;
@@ -17,10 +19,11 @@ import android.widget.ListView;
 			protected static final String SITE_CHOISI = "com.projetandroid.newsandroid";
 			ListView list ;
 			private String[] mStrings = {"Maliweb", "RFI", "Maliactu", "TV5 Monde", "France 24"};
+		
 			
-			public void onCreate(Bundle savedInstanceState) {
-				super.onCreate(savedInstanceState);
-				        setContentView(R.layout.main);
+			public void onCreate (Bundle savedInstanceState) {
+						super.onCreate(savedInstanceState);
+				        setContentView(R.layout.activity_main);
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
 			ListView list = (ListView)findViewById(R.id.list);
 			list.setAdapter(adapter);
@@ -31,7 +34,7 @@ import android.widget.ListView;
 	        	   
 
 				Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-				intent.putExtra(MainActivity.SITE_CHOISI, mStrings[position]);
+				intent.putExtra(SITE_CHOISI, mStrings[position]);
 				startActivity(intent);
 				}
 				
