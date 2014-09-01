@@ -18,7 +18,7 @@ import android.widget.ListView;
 			
 			protected static final String SITE_CHOISI = "com.projetandroid.newsandroid";
 			ListView list ;
-			private String[] mStrings = {"Maliweb", "RFI", "Maliactu", "TV5 Monde", "France 24"};
+			private String[] mStrings = {"Maliweb", "Maliactu","RFI",  "TV5 Monde", "France 24"};
 		
 			
 			public void onCreate (Bundle savedInstanceState) {
