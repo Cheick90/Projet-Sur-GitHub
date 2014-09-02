@@ -1,27 +1,34 @@
 package com.example.newsandroid;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.os.Handler;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class SecondActivity extends Activity{
-	WebView webview;
+public class SecondActivity extends Activity implements OnItemClickListener{
+	    private ListView mRssListView;
+	    private FeedXMLpullParser mNewsFeeder;
+	    private List<RSSFeed> mRssFeedList;
+	    private RssAdapter mRssAdap;
 	
-	String[] mUrls = new String[] {"http://www.maliweb.net/economie/banque-mond-fmi/washington-fmi-mali-meme-longueur-donde-454922.html", "http://www.maliweb.net/la-situation-politique-et-securitaire-au-nord/ouagadougou-les-groupes-du-nord-du-mali-sentendent-pas-495612.html", "http://www.maliweb.net/untm-syndicats/greve-48-heures-luntm-laveu-koulouba-495162.html","http://www.maliweb.net/non-classe/reintegration-rebelles-larmee-malienne-gouvernement-cherche-reduire-lhostilite-chefs-militaires-495232.html",
-			"http://maliactu.net/corruption-ibk-ordonne-la-revision-de-tous-les-contrats-signes-par-soumeylou-boubeye-maiga/","http://www.maliactu.net",
-            "http://www.rfi.fr/moyen-orient/20140810-gaza-israel-palestine-guerre-morts-manifestations-tel-aviv-paris-boycott/", "http://www.rfi.fr",
-            "http://www.tv5.org/cms/chaine-francophone/info/p-1911-Irak-Nouvelles-frappes-americaines-sur-les-jihadistes-Fabius-appelle-a-l-unite.htm?&rub=2&xml=newsmlmmd.urn.newsml.afp.com.20140810.0fa85d3f.34d5.414a.a756.5cb77498298b.xml","http://www.tv5.org",
-            "http://www.france24.com/fr/urgent/20140810-irak-leiil-a-assassine-moins-500-yazidis-a-inhumes-fosses-communes-ministere-irakien-droits-lhomme/","http://www.france24.fr"};
+	String[] mUrls = new String[] {"http://www.maliweb.net/feed/", "http://www.maliactu.net/feed/", "http://www.rfi.fr/feed","http://www.tv5.org/feed",
+			"http://www.france24.com/feed"};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,50 +37,112 @@ public class SecondActivity extends Activity{
 		
 		Intent intent = getIntent();
 		String mStrings = intent.getStringExtra(MainActivity.SITE_CHOISI);
-		
-			
-			
-			switch (mStrings) {
+		switch (mStrings) {
 	    	case "Maliweb": 
-	    		mUrls = new String[] {"http://www.maliweb.net/economie/banque-mond-fmi/washington-fmi-mali-meme-longueur-donde-454922.html",
-	    				               "http://www.maliweb.net/la-situation-politique-et-securitaire-au-nord/ouagadougou-les-groupes-du-nord-du-mali-sentendent-pas-495612.html", 
-	    				               "http://www.maliweb.net/untm-syndicats/greve-48-heures-luntm-laveu-koulouba-495162.html",
-	    				               "http://www.maliweb.net/non-classe/reintegration-rebelles-larmee-malienne-gouvernement-cherche-reduire-lhostilite-chefs-militaires-495232.html"};
+	    		mUrls = new String[] {"http://www.maliweb.net/feed"};
 	    		  break;
 	    	case "Maliactu":
-	    		mUrls  = new String[] { "http://maliactu.net/corruption-ibk-ordonne-la-revision-de-tous-les-contrats-signes-par-soumeylou-boubeye-maiga/",
-	    				                "http://www.maliactu.net"};
+	    		mUrls  = new String[] {"http://www.maliactu.net/feed"};
 	        	   break;  
 	    	case  "RFI":
-	    		mUrls = new String[] { "http://www.rfi.fr/moyen-orient/20140810-gaza-israel-palestine-guerre-morts-manifestations-tel-aviv-paris-boycott/", 
-	    								"http://www.rfi.fr"};
+	    		mUrls = new String[] {"http://www.rfi.fr/feed"};
 	    		   break; 
 	    	case "TV5 Monde": 
-	    		mUrls = new String[] {"http://www.tv5.org/cms/chaine-francophone/info/p-1911-Irak-Nouvelles-frappes-americaines-sur-les-jihadistes-Fabius-appelle-a-l-unite.htm?&rub=2&xml=newsmlmmd.urn.newsml.afp.com.20140810.0fa85d3f.34d5.414a.a756.5cb77498298b.xml", 
-	    								"http://www.tv5monde.org"};
+	    		mUrls = new String[] {"http://www.tv5monde.org/feed"};
 	    		  break;
 	    	case "France 24": 
-	    		mUrls = new String[] { "http://www.france24.com/fr/urgent/20140810-irak-leiil-a-assassine-moins-500-yazidis-a-inhumes-fosses-communes-ministere-irakien-droits-lhomme/",
-	    								"http://www.france24.fr"};
+	    		mUrls = new String[] {"http://www.france24.fr/feed"};
 	        	   break;
 		}
 
-    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mUrls);
-	final ListView list = (ListView)findViewById(R.id.list);
-	list.setAdapter(adapter);
+		mRssListView = (ListView) findViewById(R.id.rss_list_view);
+        mRssFeedList = new ArrayList<RSSFeed>();
+        new DoRssFeedTask().execute(mUrls);
+        mRssListView.setOnItemClickListener(this);
 
-	list.setOnItemClickListener(new OnItemClickListener() {
-		@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			       
-			   String url = mUrls[position];    
-			   Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			   startActivity(webIntent);		
-	 }
+}
+
+	private class RssAdapter extends ArrayAdapter<RSSFeed> {
+        private List<RSSFeed> rssFeedLst;
+
+        public RssAdapter(Context context, int textViewResourceId, List<RSSFeed> rssFeedLst) {
+            super(context, textViewResourceId, rssFeedLst);
+            this.rssFeedLst = rssFeedLst;
+        }
+        
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view = convertView;
+            RssHolder rssHolder = null;
+            if (convertView == null) {
+                view = View.inflate(SecondActivity.this, R.layout.rss_list_item, null);
+                rssHolder = new RssHolder();
+                rssHolder.rssTitleView = (TextView) view.findViewById(R.id.rss_title_view);
+                view.setTag(rssHolder);
+            } else {
+                rssHolder = (RssHolder) view.getTag();
+            }
+            RSSFeed rssFeed = rssFeedLst.get(position);
+            rssHolder.rssTitleView.setText(rssFeed.getTitle());
+            return view;
+        }
+    }
+	 static class RssHolder {
+	        public TextView rssTitleView;
+	    }
 	
-});
+	 public class DoRssFeedTask extends AsyncTask<String, Void, List<RSSFeed>> {
+	        ProgressDialog prog;
+	        String jsonStr = null;
+	        Handler innerHandler;
+
+	        @Override
+	        protected void onPreExecute() {
+	            prog = new ProgressDialog(SecondActivity.this);
+	            prog.setMessage("S'il vous plait attendez....");
+	            prog.show();
+	        }
+
+	        @Override
+	        protected List<RSSFeed> doInBackground(String... params) {
+	            for (String urlVal : params) {
+	                mNewsFeeder = new FeedXMLpullParser (urlVal);
+	            }
+	            mRssFeedList = mNewsFeeder.parse();
+	            return mRssFeedList;
+	        }
+
+	        @Override
+	        protected void onPostExecute(List<RSSFeed> result) {
+	            prog.dismiss();
+	            runOnUiThread(new Runnable() {
+
+	                @Override
+	                public void run() {
+	                    mRssAdap = new RssAdapter(SecondActivity.this, R.layout.rss_list_item,
+	                            mRssFeedList);
+	                    int count = mRssAdap.getCount();
+	                    if (count != 0 && mRssAdap != null) {
+	                        mRssListView.setAdapter(mRssAdap);
+	                    }
+	                }
+	            });
+	        }
+
+	        @Override
+	        protected void onProgressUpdate(Void... values) {
+	        }
+	    }
+	 @Override
+	 public void onItemClick(AdapterView<?> adapterView, View v, int position, long id) {
+	    	
+	    	String url = mUrls[position];
+	    	Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
+	    	startActivity(intent);
+	    }
 	}
 
 	
-	}
+
 
