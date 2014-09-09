@@ -5,6 +5,8 @@ import java.util.List;
 
 
 
+
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,8 +29,9 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	    private List<RSSFeed> mRssFeedList;
 	    private RssAdapter mRssAdap;
 	
-	String[] mUrls = new String[] {"http://www.maliweb.net/feed/", "http://www.maliactu.net/feed/", "http://www.rfi.fr/feed","http://www.tv5.org/feed",
-			"http://www.france24.com/feed"};
+	String[] mUrls = new String[] {"http://www.maliweb.net/feed/", "http://www.maliactu.net/feed/", 
+			                      "http://news.abamako.com/feed","http://www.malijet.com/feed/",
+			                      "http://www.bamada.net/feed"};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,13 +48,13 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	    		mUrls  = new String[] {"http://www.maliactu.net/feed"};
 	        	   break;  
 	    	case  "RFI":
-	    		mUrls = new String[] {"http://www.rfi.fr/feed"};
+	    		mUrls = new String[] {"http://news.abamako.com/feed"};
 	    		   break; 
-	    	case "TV5 Monde": 
-	    		mUrls = new String[] {"http://www.tv5monde.org/feed"};
+	    	case "Malijet": 
+	    		mUrls = new String[] {"http://www.malijet.com/feed"};
 	    		  break;
 	    	case "France 24": 
-	    		mUrls = new String[] {"http://www.france24.fr/feed"};
+	    		mUrls = new String[] {"http://www.bamada.net/feed"};
 	        	   break;
 		}
 
@@ -120,8 +123,7 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 
 	                @Override
 	                public void run() {
-	                    mRssAdap = new RssAdapter(SecondActivity.this, R.layout.rss_list_item,
-	                            mRssFeedList);
+	                    mRssAdap = new RssAdapter(SecondActivity.this, R.layout.rss_list_item, mRssFeedList);
 	                    int count = mRssAdap.getCount();
 	                    if (count != 0 && mRssAdap != null) {
 	                        mRssListView.setAdapter(mRssAdap);
@@ -137,10 +139,12 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	 @Override
 	 public void onItemClick(AdapterView<?> adapterView, View v, int position, long id) {
 	    	
-	    	String url = mUrls[position];
-	    	Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
-	    	startActivity(intent);
+		   
+		   RSSFeed lien = mRssFeedList.get(position);
+		   Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lien.getLink()));
+		   startActivity(intent);
 	    }
+	
 	}
 
 	
