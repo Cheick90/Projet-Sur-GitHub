@@ -30,8 +30,11 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	    private RssAdapter mRssAdap;
 	
 	String[] mUrls = new String[] {"http://www.maliweb.net/feed/", "http://www.maliactu.net/feed/", 
-			                      "http://news.abamako.com/feed","http://www.malijet.com/feed/",
-			                      "http://www.bamada.net/feed"};
+			                      "http://www.abamako.com/newsletter/","http://www.malijet.com/feed/",
+			                      "http://www.rfi.fr/actufr/pages/001/accueil.xml","http://feeds2.feedburner.com/feedsportal/ja_actu",
+			                      "http://www.tv5monde.com/TV5Site/rss/actualites.php?rub=6","http://feeds.feedburner.com/euronews/fr/home/",
+			                      "http://feeds.lefigaro.fr/c/32266/f/438191/index.rss","http://www.lepoint.fr/rss.xml","http://mali-web.org/feed",
+			                      "http://www.france24.com/fr/afrique/rss"};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,15 +50,36 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	    	case "Maliactu":
 	    		mUrls  = new String[] {"http://www.maliactu.net/feed"};
 	        	   break;  
-	    	case  "RFI":
-	    		mUrls = new String[] {"http://news.abamako.com/feed"};
+	    	case  "Abamako":
+	    		mUrls = new String[] {"http://www.abamako.com/newsletter/"};
 	    		   break; 
 	    	case "Malijet": 
 	    		mUrls = new String[] {"http://www.malijet.com/feed"};
 	    		  break;
-	    	case "France 24": 
-	    		mUrls = new String[] {"http://www.bamada.net/feed"};
+	    	case "RFI": 
+	    		mUrls = new String[] {"http://www.rfi.fr/general/rss/"};
 	        	   break;
+	    	case "Jeune Afrique": 
+	    		mUrls = new String[] {"http://feeds2.feedburner.com/feedsportal/ja_actu"};
+	        	   break; 
+	    	case "TV5 Monde": 
+	    		mUrls = new String[] {"http://www.tv5monde.com/data/tv5/rss/rssjtmonde.xml"};
+	        	   break;
+	    	case "EURONEWS": 
+	    		mUrls = new String[] {"http://feeds.feedburner.com/euronews/fr/home/"};
+	        	   break; 
+	    	case "Le FIGARO": 
+	    		mUrls = new String[] {"http://feeds.lefigaro.fr/c/32266/f/438191/index.rss"};
+	        	   break;
+	    	case "Le POINT": 
+	    		mUrls = new String[] {"http://www.lepoint.fr/rss.xml"};
+	        	   break;
+	    	case "BAMADA": 
+	    		mUrls = new String[] {"http://mali-web.org/feed"};
+	        	   break; 
+	    	case "FRANCE24": 
+	    		mUrls = new String[] {"http://www.france24.com/fr/afrique/rss"};
+	        	   break; 
 		}
 
 		mRssListView = (ListView) findViewById(R.id.rss_list_view);
