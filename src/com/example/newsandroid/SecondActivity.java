@@ -2,11 +2,6 @@ package com.example.newsandroid;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,19 +10,24 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SecondActivity extends Activity implements OnItemClickListener{
+public class SecondActivity extends ListFragment implements OnItemClickListener{
 	    private ListView mRssListView;
 	    private FeedXMLpullParser mNewsFeeder;
 	    private List<RSSFeed> mRssFeedList;
 	    private RssAdapter mRssAdap;
+	    
 	
 	String[] mUrls = new String[] {"http://www.maliweb.net/feed/", "http://www.maliactu.net/feed/", 
 			                      "http://www.abamako.com/newsletter/","http://www.malijet.com/feed/",
@@ -39,48 +39,9 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_main);
 		
-		Intent intent = getIntent();
-		String mStrings = intent.getStringExtra(MainActivity.SITE_CHOISI);
-		switch (mStrings) {
-	    	case "Maliweb": 
-	    		mUrls = new String[] {"http://www.maliweb.net/feed"};
-	    		  break;
-	    	case "Maliactu":
-	    		mUrls  = new String[] {"http://www.maliactu.net/feed"};
-	        	   break;  
-	    	case  "Abamako":
-	    		mUrls = new String[] {"http://www.abamako.com/newsletter/"};
-	    		   break; 
-	    	case "Malijet": 
-	    		mUrls = new String[] {"http://www.malijet.com/feed"};
-	    		  break;
-	    	case "RFI": 
-	    		mUrls = new String[] {"http://www.rfi.fr/general/rss/"};
-	        	   break;
-	    	case "Jeune Afrique": 
-	    		mUrls = new String[] {"http://feeds2.feedburner.com/feedsportal/ja_actu"};
-	        	   break; 
-	    	case "TV5 Monde": 
-	    		mUrls = new String[] {"http://www.tv5monde.com/data/tv5/rss/rssjtmonde.xml"};
-	        	   break;
-	    	case "EURONEWS": 
-	    		mUrls = new String[] {"http://feeds.feedburner.com/euronews/fr/home/"};
-	        	   break; 
-	    	case "Le FIGARO": 
-	    		mUrls = new String[] {"http://feeds.lefigaro.fr/c/32266/f/438191/index.rss"};
-	        	   break;
-	    	case "Le POINT": 
-	    		mUrls = new String[] {"http://www.lepoint.fr/rss.xml"};
-	        	   break;
-	    	case "BAMADA": 
-	    		mUrls = new String[] {"http://mali-web.org/feed"};
-	        	   break; 
-	    	case "FRANCE24": 
-	    		mUrls = new String[] {"http://www.france24.com/fr/afrique/rss"};
-	        	   break; 
-		}
+		ListAdapter listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mUrls);
+		setListAdapter(listAdapter);
 
 		mRssListView = (ListView) findViewById(R.id.rss_list_view);
         mRssFeedList = new ArrayList<RSSFeed>();
@@ -88,6 +49,11 @@ public class SecondActivity extends Activity implements OnItemClickListener{
         mRssListView.setOnItemClickListener(this);
 
 }
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.rss_list_item, container, false);
+	}
 
 	private class RssAdapter extends ArrayAdapter<RSSFeed> {
         private List<RSSFeed> rssFeedLst;
@@ -106,17 +72,20 @@ public class SecondActivity extends Activity implements OnItemClickListener{
                 view = View.inflate(SecondActivity.this, R.layout.rss_list_item, null);
                 rssHolder = new RssHolder();
                 rssHolder.rssTitleView = (TextView) view.findViewById(R.id.rss_title_view);
+                rssHolder.rssDescriptionView = (TextView) view.findViewById(R.id.rss_description_view);
                 view.setTag(rssHolder);
             } else {
                 rssHolder = (RssHolder) view.getTag();
             }
             RSSFeed rssFeed = rssFeedLst.get(position);
             rssHolder.rssTitleView.setText(rssFeed.getTitle());
+            rssHolder.rssDescriptionView.setText(rssFeed.getDescription());
             return view;
         }
     }
 	 static class RssHolder {
-	        public TextView rssTitleView;
+			public TextView rssTitleView;
+			public TextView rssDescriptionView;
 	    }
 	
 	 public class DoRssFeedTask extends AsyncTask<String, Void, List<RSSFeed>> {
@@ -170,7 +139,3 @@ public class SecondActivity extends Activity implements OnItemClickListener{
 	    }
 	
 	}
-
-	
-
-

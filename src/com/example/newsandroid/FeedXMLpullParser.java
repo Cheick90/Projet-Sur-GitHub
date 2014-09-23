@@ -28,12 +28,8 @@ package com.example.newsandroid;
 	    private String title;
 	    private String link;
 	    private String description;
-	    private String category;
-	    private String pubDate;
-	    private String guid;
-	    private String feedburner;
-
-	    
+	    private String image;
+	   
 
 	    public static final String ITEM = "item";
 	    public static final String CHANNEL = "channel";
@@ -41,11 +37,8 @@ package com.example.newsandroid;
 	    public static final String TITLE = "title";
 	    public static final String LINK = "link";
 	    public static final String DESCRIPTION = "description";
-	    public static final String CATEGORY = "category";
-	    public static final String PUBLISHEDDATE = "pubDate";
-	    public static final String GUID = "guid";
-	    public static final String FEEDBURNERORIGLINK = "feedburner:origLink";
-
+	    public static final String IMAGE = "image";
+	    
 	    
 	    public FeedXMLpullParser(String urlString) {
 	        this.urlString = urlString;
@@ -91,27 +84,17 @@ package com.example.newsandroid;
 	                        if (tagName.equals(DESCRIPTION)) {
 	                            description = parser.nextText().toString();
 	                        }
-	                        if (tagName.equals(CATEGORY)) {
-	                            category = parser.nextText().toString();
+	                        if (tagName.equals(IMAGE)) {
+	                            image = parser.nextText().toString();
 	                        }
-	                        if (tagName.equals(PUBLISHEDDATE)) {
-	                            pubDate = parser.nextText().toString();
-	                        }
-	                        if (tagName.equals(GUID)) {
-	                            guid = parser.nextText().toString();
-	                        }
-	                        if (tagName.equals(FEEDBURNERORIGLINK)) {
-	                            feedburner = parser.nextText().toString();
-	                        }
+	                        
 	                        break;
 	                    case XmlPullParser.END_TAG:
 	                        if (tagName.equals(CHANNEL)) {
 	                            done = true;
 	                        } else if (tagName.equals(ITEM)) {
 
-	                            rssFeed = new RSSFeed(title, link, description, category, pubDate,
-	                                    guid,
-	                                    feedburner);
+	                            rssFeed = new RSSFeed(title, link, description, image);
 	                            rssFeedList.add(rssFeed);
 	                        }
 	                        break;
