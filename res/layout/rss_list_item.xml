@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
+    android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/rss_title_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#FF0001"
+    <ImageView
+        android:id="@+id/thumbImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_centerVertical="true"
          />
-    
+<TextView
+        android:id="@+id/rss_title_view"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:layout_toRightOf="@id/thumbImage"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text=""
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+  
+        
     <TextView
         android:id="@+id/rss_description_view"
         android:layout_width="wrap_content"
-        android:layout_height="80sp"
-        android:textSize="12sp"
-        android:textColor="#113322"
-        android:gravity="bottom"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-         />
+        android:layout_height="120sp"
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@id/thumbImage"
+        android:paddingTop="45dp"
+        android:paddingLeft="5dp"
+        android:text=""
+        android:textSize="12sp" />
+  
 
-</LinearLayout>
+   
+</RelativeLayout>

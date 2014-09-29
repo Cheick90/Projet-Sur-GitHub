@@ -1,14 +1,16 @@
-package com.example.newsandroid;
+package com.example.actualiteandroid;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 public class RSSFeed implements Serializable {
 
-    private String title;
+	private String title;
     private String link;
     private String description;
     private String image;
+    private String pubdate;
+    private String attachmentUrl;
    
     public RSSFeed() {
     }
@@ -51,7 +53,20 @@ public class RSSFeed implements Serializable {
     public void setImage(String image) {
         this.image = image ;
     }
+    void setDate(String pubdate) {
+		this.pubdate = pubdate;
+    }
+    public String getDate() {
+		return pubdate;
+	}
+    public String getAttachmentUrl() {
+		return attachmentUrl;
+	}
 
+	public void setAttachmentUrl(String attachmentUrl) {
+		this.attachmentUrl = attachmentUrl;
+	}
 
 }
+
 

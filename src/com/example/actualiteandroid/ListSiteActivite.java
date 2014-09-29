@@ -1,6 +1,10 @@
-package com.example.newsandroid;
+package com.example.actualiteandroid;
+
+
 
 import android.content.Context;
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
