@@ -1,6 +1,7 @@
 package com.example.actualiteandroid;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;

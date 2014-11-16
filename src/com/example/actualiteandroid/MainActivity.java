@@ -17,8 +17,8 @@ public class MainActivity extends ListActivity {
 			
 			protected static final String SITE_CHOISI = "com.projetandroid.newsandroid";
 			
-			private String[] mStrings = {"Maliweb", "Maliactu","abamako",  "Malijet", "RFI", "Jeune Afrique", "TV5 Monde",
-					"EURONEWS", "Le FIGARO", "Le POINT", "BAMADA","FRANCE24"};
+			private String[] mStrings = {"BAMADA","FRANCE24",  "Maliactu","abamako",  "Malijet", "RFI", "Jeune Afrique", "TV5 Monde",
+					"EURONEWS", "Le FIGARO", "Le POINT", "Maliweb"};
 			
 			@Override
 			public void onCreate (Bundle savedInstanceState) {
